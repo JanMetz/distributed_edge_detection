@@ -1,0 +1,7 @@
+{
+    "backend_ports": "8000-8005",
+    "registry_addr": "192.168.100.55",
+    "registry_port": 8000,
+    "frontend_ports": "8006-8010",
+    "token_ttl_minutes": 5
+}
