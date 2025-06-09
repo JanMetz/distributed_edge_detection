@@ -25,6 +25,10 @@ def remove_node_from_registry(token: str):
 def print_error_msg(msg: str, response: requests.Response):
     print(f'{msg}. Status code: {response.status_code} {response.text}')
 
+def log(msg: str):
+    with open('log.txt', 'a') as f:
+        f.write(msg + '\n')
+
 def get_config_value(key: str):
     with open(configfile_filename) as json_data:
         d = json.load(json_data)

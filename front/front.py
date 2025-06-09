@@ -1,14 +1,16 @@
 import random
 import streamlit as st
-import cv2
 import numpy as np
 import PIL.Image
 import requests
 from utils import *
 from pathlib import Path
 
+addr = get_my_ip()
+port = 8051
+token = register_node(addr, 8555, 'front')
+log(f'Front: running at addr: {addr} port: {port}')
 
-token = register_node(get_my_ip(), 8051, 'front')
 DOWNLOAD_DIR = Path("downloads")
 registry_addr = get_registry_addr()
 
@@ -28,26 +30,16 @@ try:
                     node = backend_nodes[random.randint(0, len(backend_nodes) - 1)]
                     response = requests.post(f'http://{node["addr"]}/images',  data={"token": token}, files={"file": uploaded_file.read()})
                 else:
-                    print("No nodes in the registry")
+                    log("Front: No nodes in the registry")
             else:
                 print_error_msg('Failed to get nodes', response)
 
             if response.status_code == 200:
-                DOWNLOAD_DIR.mkdir(exist_ok=True)
-                with open(DOWNLOAD_DIR / "edges.npy", "wb") as file:
-                    for chunk in response.iter_content(chunk_size=8192):
-                        file.write(chunk)
-                    print("File downloaded successfully!")
-
-
-                edges = np.load(DOWNLOAD_DIR / 'edges.npy')
-                image = PIL.Image.open(uploaded_file)
-                tab1, tab2 = st.tabs(["Detected edges", "Original"])
-                tab1.image(edges, use_container_width=True)
-                tab2.image(image, use_container_width=True)
+                st.write(response.json()['desc'])
             else:
                 print_error_msg('Failed to download file', response)
     else:
+        log('Front: could not obtain token')
         st.title("Uuuups...")
         st.write("We had trouble contacting the registry service. Please try again later.")
 

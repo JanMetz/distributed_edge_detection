@@ -1,0 +1,35 @@
+services:
+  front:
+    container_name: front
+    image: 'front'
+    build:
+      context: ./
+      dockerfile: ./front/Dockerfile
+    depends_on:
+      - back
+    volumes:
+      - .:/home/jan/PycharmProjects/projektowanie-systemow-rozproszonych/
+    ports:
+      - "8555:8555"
+  back:
+    container_name: back
+    image: 'back'
+    build:
+      context: ./
+      dockerfile: ./back/Dockerfile
+    volumes:
+      - .:/home/jan/PycharmProjects/projektowanie-systemow-rozproszonych/
+    depends_on:
+      - registry
+    ports:
+      - "8001:8001"
+  registry:
+    container_name: registry
+    image: 'registry'
+    build:
+      context: ./
+      dockerfile: ./registry/Dockerfile
+    volumes:
+      - .:/home/jan/PycharmProjects/projektowanie-systemow-rozproszonych/
+    ports:
+      - "8000:8000"
