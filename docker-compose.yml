@@ -29,7 +29,5 @@ services:
     build:
       context: ./
       dockerfile: ./registry/Dockerfile
-    volumes:
-      - .:/home/jan/PycharmProjects/projektowanie-systemow-rozproszonych/
     ports:
       - "8000:8000"
