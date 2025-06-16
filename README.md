@@ -8,8 +8,14 @@ that were discovered in the provided image.
 ![image info](./images/puppies-edges.png)
 
 ## Technology
-- Python3.12
+- Python 3.12
 - Streamlit
+- OpenCV
+- Requests
+- Pillow
+- FastAPI
+- Numpy
+- Uvicorn
 
 ## Prerequisites for building & running locally
 - Installed minikube
