@@ -2,6 +2,9 @@ import requests
 from fastapi import FastAPI, HTTPException, UploadFile, File, Form
 from fastapi.responses import FileResponse
 from utils import *
+from PIL import Image
+import numpy as np
+import cv2
 
 app = FastAPI()
 
@@ -31,8 +34,17 @@ async def post_images( token: str = Form(...), file: UploadFile = File(...)):
             shutil.copyfileobj(file.file, buffer)
 
         log(f'Backend: retrieved file')
+        img = Image.open(file_path)
+        img = np.array(img)
 
-        return {"desc": "abcd test"}
+        edges = cv2.Canny(img, 100, 200)
+        np.save(UPLOAD_DIR / 'edges.npy', edges)
+        file_path = UPLOAD_DIR / 'edges.npy'
+
+        if file_path.exists():
+            return FileResponse(file_path, media_type="application/octet-stream", filename='edges.npy')
+
+        return {"error": "File not found"}
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

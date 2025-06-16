@@ -7,6 +7,7 @@ ADD resources.py .
 ADD config.json .
 
 RUN pip install --upgrade pip
-RUN pip install requests python-dotenv fastapi uvicorn python-multipart
+RUN pip install requests python-dotenv fastapi uvicorn python-multipart pillow opencv-python-headless
+
 
 CMD ["python", "./backend.py"]

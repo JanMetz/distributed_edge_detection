@@ -44,7 +44,7 @@ def put_value_in_config(key: str, value: str):
         json.dump(data, file, indent=4)
 
 def get_registry_addr():
-    return get_config_value('registry_addr') + ':' + str(get_config_value('registry_port'))
+    return 'registry:' + str(get_config_value('registry_port'))
 
 def get_my_ip():
     return socket.gethostbyname(socket.gethostname())

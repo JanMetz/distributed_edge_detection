@@ -1,7 +1,7 @@
 services:
   front:
     container_name: front
-    image: 'front'
+    image: 'psr-frontend'
     build:
       context: ./
       dockerfile: ./front/Dockerfile
@@ -13,7 +13,7 @@ services:
       - "8555:8555"
   back:
     container_name: back
-    image: 'back'
+    image: 'psr-backend'
     build:
       context: ./
       dockerfile: ./back/Dockerfile
@@ -23,9 +23,10 @@ services:
       - registry
     ports:
       - "8001:8001"
+      - "443:8002"
   registry:
     container_name: registry
-    image: 'registry'
+    image: 'psr-registry'
     build:
       context: ./
       dockerfile: ./registry/Dockerfile

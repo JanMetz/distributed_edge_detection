@@ -16,10 +16,10 @@ spec:
         "kubernetes.io/os": linux
       containers:
       - name: registry
-        image: zbsiregistry.azurecr.io/registry:latest
+        image: janm509/psr.psr-registry
         ports:
         - containerPort: 8001
-          name: back
+          name: registry
         resources:
           requests:
             cpu: 1m
@@ -38,30 +38,30 @@ spec:
     targetPort: 8000
   selector:
     app: registry
-  type: LoadBalancer
+  type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: back
+  name: backend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: back
+      app: backend
   template:
     metadata:
       labels:
-        app: back
+        app: backend
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
       containers:
-      - name: back
-        image: zbsiregistry.azurecr.io/back:latest
+      - name: backend
+        image: janm509/psr.psr-backend
         ports:
         - containerPort: 8001
-          name: back
+          name: backend
         resources:
           requests:
             cpu: 1m
@@ -73,37 +73,37 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: back
+  name: backend
 spec:
   ports:
   - port: 8001
     targetPort: 8001
   selector:
-    app: back
-  type: LoadBalancer
+    app: backend
+  type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: front
+  name: frontend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: front
+      app: frontend
   template:
     metadata:
       labels:
-        app: front
+        app: frontend
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
       containers:
-      - name: front
-        image: zbsiregistry.azurecr.io/front:latest
+      - name: frontend
+        image: janm509/psr.psr-frontend
         ports:
         - containerPort: 8555
-          name: front
+          name: frontend
         resources:
           requests:
             cpu: 1m
@@ -115,11 +115,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: front
+  name: frontend
 spec:
   ports:
   - port: 8555
     targetPort: 8555
+    nodePort: 30007
   selector:
-    app: front
-  type: LoadBalancer
+    app: frontend
+  type: NodePort

@@ -35,7 +35,18 @@ try:
                 print_error_msg('Failed to get nodes', response)
 
             if response.status_code == 200:
-                st.write(response.json()['desc'])
+                DOWNLOAD_DIR.mkdir(exist_ok=True)
+                with open(DOWNLOAD_DIR / "edges.npy", "wb") as file:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        file.write(chunk)
+                    print("File downloaded successfully!")
+
+                edges = np.load(DOWNLOAD_DIR / 'edges.npy')
+                image = PIL.Image.open(uploaded_file)
+
+                tab1, tab2 = st.tabs(["Detected edges", "Original"])
+                tab1.image(edges, use_container_width=True)
+                tab2.image(image, use_container_width=True)
             else:
                 print_error_msg('Failed to download file', response)
     else:
