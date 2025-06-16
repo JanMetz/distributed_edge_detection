@@ -54,7 +54,7 @@ async def post_images( token: str = Form(...), file: UploadFile = File(...)):
 if __name__ == "__main__":
     import uvicorn
     host = get_my_ip()
-    port = 8001
+    port = get_config_value('backend_port')
     token = None
     try:
         token = register_node(host, port, 'back')

@@ -23,7 +23,6 @@ services:
       - registry
     ports:
       - "8001:8001"
-      - "443:8002"
   registry:
     container_name: registry
     image: 'psr-registry'

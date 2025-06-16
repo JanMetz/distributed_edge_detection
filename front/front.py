@@ -7,8 +7,8 @@ from utils import *
 from pathlib import Path
 
 addr = get_my_ip()
-port = 8051
-token = register_node(addr, 8555, 'front')
+port = get_config_value('frontend_port')
+token = register_node(addr, port, 'front')
 log(f'Front: running at addr: {addr} port: {port}')
 
 DOWNLOAD_DIR = Path("downloads")

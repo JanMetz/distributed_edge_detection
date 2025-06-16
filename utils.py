@@ -34,15 +34,6 @@ def get_config_value(key: str):
         d = json.load(json_data)
         return d[key]
 
-def put_value_in_config(key: str, value: str):
-    with open(configfile_filename, 'r') as file:
-        data = json.load(file)
-
-    data[key] = value
-
-    with open(configfile_filename, 'w') as file:
-        json.dump(data, file, indent=4)
-
 def get_registry_addr():
     return 'registry:' + str(get_config_value('registry_port'))
 

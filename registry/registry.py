@@ -102,6 +102,5 @@ if __name__ == "__main__":
     import uvicorn
     addr = get_my_ip()
     port = get_config_value('registry_port')
-    put_value_in_config('registry_addr', addr)
     log(f'Registry: running at addr: {addr} port: {port} ttl: {ttl}')
     uvicorn.run(app, host=addr, port=port)
