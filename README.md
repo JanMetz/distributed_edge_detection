@@ -7,6 +7,9 @@ that were discovered in the provided image.
 ![image info](./images/puppies.png)
 ![image info](./images/puppies-edges.png)
 
+## App architecture
+![image info](./images/architecture.png)
+
 ## Technology
 - Python 3.12
 - Streamlit
