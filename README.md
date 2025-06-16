@@ -23,6 +23,11 @@ that were discovered in the provided image.
 - Installed docker & docker-compose
 - Account on DockerHub (change my docker account address for yours in kubernetes-deploy and push_images)
 
+## Power-up the cluster
+```
+minikube start
+```
+
 ## Build, push & run:
 ```
 docker-compose build
@@ -34,4 +39,5 @@ minikube service frontend
 ## Cleanup
 ```
 kubectl delete -f kubernetes-deploy.yaml
+minikube stop
 ```
